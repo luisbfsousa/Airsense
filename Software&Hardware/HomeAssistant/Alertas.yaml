@@ -1,0 +1,108 @@
+- alias: "Alerta: CO₂ (S88 acima de 2000 ppm)"
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.s88_co2
+      above: 2000
+      for:
+        minutes: 1
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "Alerta de CO₂"
+        message: "O nível de CO₂ (S88) está acima de 2000 ppm. Valor atual: {{ states('sensor.s88_co2') }} ppm"
+
+- alias: "Alerta: CO₂eq (SGP30 acima de 2000 ppm)"
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.sgp30_co2eq
+      above: 2000
+      for:
+        minutes: 1
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "Alerta de CO₂eq"
+        message: "O CO₂eq (estimado pelo SGP30) está acima de 2000 ppm. Valor: {{ states('sensor.sgp30_co2eq') }} ppm"
+
+- alias: "Alerta: PM2.5 acima de 35 µg/m³"
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.sen55_pm2_5
+      above: 35
+      for:
+        minutes: 1
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "Alerta de Partículas Finas (PM2.5)"
+        message: "Concentração de PM2.5 elevada: {{ states('sensor.sen55_pm2_5') }} µg/m³"
+
+- alias: "Alerta: PM10 acima de 50 µg/m³"
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.sen55_pm10
+      above: 50
+      for:
+        minutes: 1
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "Alerta de Partículas (PM10)"
+        message: "Concentração de PM10 elevada: {{ states('sensor.sen55_pm10') }} µg/m³"
+
+- alias: "Alerta: TVOC acima de 300 ppb"
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.sgp30_tvoc
+      above: 300
+      for:
+        minutes: 1
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "Alerta de Compostos Orgânicos (TVOC)"
+        message: "Valor de TVOC acima do limite: {{ states('sensor.sgp30_tvoc') }} ppb"
+
+- alias: "Alerta: Temperatura acima de 30 °C"
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.sen55_temperature
+      above: 30
+      for:
+        minutes: 1
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "Temperatura Elevada"
+        message: "Temperatura elevada: {{ states('sensor.sen55_temperature') }} °C"
+
+- alias: "Alerta: Humidade fora do intervalo ideal"
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.sen55_humidity
+      below: 30
+      for:
+        minutes: 1
+    - platform: numeric_state
+      entity_id: sensor.sen55_humidity
+      above: 70
+      for:
+        minutes: 1
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "Humidade fora do ideal"
+        message: "Humidade atual: {{ states('sensor.sen55_humidity') }}%"
+
+- alias: "Alerta: NOx elevado (SGP30)"
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.sgp30_nox
+      above: 150
+      for:
+        minutes: 1
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "NOx Elevado"
+        message: "Valor de NOx elevado: {{ states('sensor.sgp30_nox') }} ppb"

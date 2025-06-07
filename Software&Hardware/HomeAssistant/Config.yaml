@@ -1,0 +1,115 @@
+default_config:
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+influxdb:
+  api_version: 2
+  host: 10.0.2.15
+  port: 8087
+  ssl: false
+  token: h3cFjmH0yjJ_f5fs_52cyea5ijzZixTxtmHGaILskT-SwtiiJedwJKquwQuvXtJ9rNqoKiRK7dhjGR-h8v_p8w==
+  organization: yourorg
+  bucket: AirsenseDB
+
+sensor:
+  - platform: influxdb
+    api_version: 2
+    host: 10.0.2.15
+    ssl: false
+    port: 8087
+    token: h3cFjmH0yjJ_f5fs_52cyea5ijzZixTxtmHGaILskT-SwtiiJedwJKquwQuvXtJ9rNqoKiRK7dhjGR-h8v_p8w==
+    organization: yourorg
+    bucket: AirsenseDB
+    queries_flux:
+      - name: "S88 CO2"
+        unit_of_measurement: "ppm"
+        value_template: >
+          {% if value is not none and value != 'None' %}{{ value }}{% else %}0{% endif %}
+        query: >
+          filter(fn: (r) => r._measurement == "AirQuality" and r.Sensor == "S88" and r._field == "S88CO2")
+          |> last()
+
+      - name: "SEN55 Humidity"
+        unit_of_measurement: "%"
+        value_template: >
+          {% if value is not none and value != 'None' %}{{ value }}{% else %}0{% endif %}
+        query: >
+          filter(fn: (r) => r._measurement == "AirQuality" and r.Sensor == "SEN55" and r._field == "Humidity")
+          |> last()
+
+      - name: "SEN55 PM1.0"
+        unit_of_measurement: "µg/m³"
+        value_template: >
+          {% if value is not none and value != 'None' %}{{ value }}{% else %}0{% endif %}
+        query: >
+          filter(fn: (r) => r._measurement == "AirQuality" and r.Sensor == "SEN55" and r._field == "PM1.0")
+          |> last()
+
+      - name: "SEN55 PM2.5"
+        unit_of_measurement: "µg/m³"
+        value_template: >
+          {% if value is not none and value != 'None' %}{{ value }}{% else %}0{% endif %}
+        query: >
+          filter(fn: (r) => r._measurement == "AirQuality" and r.Sensor == "SEN55" and r._field == "PM2.5")
+          |> last()
+
+      - name: "SEN55 PM4.0"
+        unit_of_measurement: "µg/m³"
+        value_template: >
+          {% if value is not none and value != 'None' %}{{ value }}{% else %}0{% endif %}
+        query: >
+          filter(fn: (r) => r._measurement == "AirQuality" and r.Sensor == "SEN55" and r._field == "PM4.0")
+          |> last()
+
+      - name: "SEN55 PM10"
+        unit_of_measurement: "µg/m³"
+        value_template: >
+          {% if value is not none and value != 'None' %}{{ value }}{% else %}0{% endif %}
+        query: >
+          filter(fn: (r) => r._measurement == "AirQuality" and r.Sensor == "SEN55" and r._field == "PM10")
+          |> last()
+
+      - name: "SEN55 Temperature"
+        unit_of_measurement: "°C"
+        value_template: >
+          {% if value is not none and value != 'None' %}{{ value }}{% else %}0{% endif %}
+        query: >
+          filter(fn: (r) => r._measurement == "AirQuality" and r.Sensor == "SEN55" and r._field == "Temperature")
+          |> last()
+
+      - name: "SGP30 CO2eq"
+        unit_of_measurement: "ppm"
+        value_template: >
+          {% if value is not none and value != 'None' %}{{ value }}{% else %}0{% endif %}
+        query: >
+          filter(fn: (r) => r._measurement == "AirQuality" and r.Sensor == "SGP30" and r._field == "CO2eq")
+          |> last()
+
+      - name: "SGP30 NOx"
+        unit_of_measurement: "ppb"
+        value_template: >
+          {% if value is not none and value != 'None' %}{{ value }}{% else %}0{% endif %}
+        query: >
+          filter(fn: (r) => r._measurement == "AirQuality" and r.Sensor == "SGP30" and r._field == "NOx")
+          |> last()
+
+      - name: "SGP30 TVOC"
+        unit_of_measurement: "ppb"
+        value_template: >
+          {% if value is not none and value != 'None' %}{{ value }}{% else %}0{% endif %}
+        query: >
+          filter(fn: (r) => r._measurement == "AirQuality" and r.Sensor == "SGP30" and r._field == "TVOC")
+          |> last()
+
+      - name: "SGP30 VOC"
+        unit_of_measurement: "ppb"
+        value_template: >
+          {% if value is not none and value != 'None' %}{{ value }}{% else %}0{% endif %}
+        query: >
+          filter(fn: (r) => r._measurement == "AirQuality" and r.Sensor == "SGP30" and r._field == "VOC")
+          |> last()

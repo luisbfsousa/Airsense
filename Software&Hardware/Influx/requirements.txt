@@ -1,0 +1,7 @@
+influxdb-client==1.48.0
+bleak==0.21.1
+asyncio
+python-dotenv==1.0.0
+
+
+

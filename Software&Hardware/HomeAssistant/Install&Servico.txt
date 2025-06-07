@@ -1,0 +1,38 @@
+docker pull ghcr.io/home-assistant/home-assistant:stable
+
+mkdir -p ~/homeassistant/config
+
+docker run -d \
+  --name homeassistant \
+  --privileged \
+  --restart unless-stopped \
+  -v ~/homeassistant/config:/config \
+  -v /etc/localtime:/etc/localtime:ro \
+  -p 8181:8123 \
+  ghcr.io/home-assistant/home-assistant:stable
+
+sudo nano /etc/systemd/system/homeassistant.service
+
+
+
+[Unit]
+Description=Home Assistant
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/docker start -a homeassistant
+ExecStop=/usr/bin/docker stop -t 2 homeassistant
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
+
+sudo systemctl daemon-reload
+sudo systemctl enable homeassistant.service
+sudo systemctl start homeassistant.service

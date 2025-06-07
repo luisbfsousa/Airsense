@@ -1,0 +1,26 @@
+sudo nano /etc/systemd/system/influxdb.service
+
+
+
+[Unit]
+Description=InfluxDB Docker Container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start -a airsensedb
+ExecStop=/usr/bin/docker stop -t 2 airsensedb
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+
+
+sudo systemctl daemon-reload
+sudo systemctl enable influxdb.service
+sudo systemctl start influxdb.service
+
+sudo systemctl status influxdb.service
