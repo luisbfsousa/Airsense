@@ -1,4 +1,4 @@
-# Airsense - Project Submission  
+# Airsense
 
 ## Poster   
 [Poster.pdf](https://github.com/luisbfsousa/Airsense/blob/main/Cartaz_students%40DETI.pdf)  
